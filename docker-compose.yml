@@ -1,6 +1,6 @@
 version: '2'
 networks:
-  lb_web:
+  piwik_front:
     external: true
   back:
     driver: bridge
@@ -8,19 +8,19 @@ services:
   db:
     image: mysql
     volumes:
-      - ./mysql/runtime:/var/lib/mysql
+      - mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD
     networks:
-    - back
+      - back
   app:
     image: piwik
     links:
       - db
     volumes:
-      - ./config:/var/www/html/config
+      - piwik:/var/www/html/config
     networks:
-    - back
+      - back
   web:
     image: nginx
     volumes:
@@ -33,15 +33,15 @@ services:
       - VIRTUAL_HOST
     networks:
       - back
-      - lb_web
+      - piwik_front
     ports:
-      - "80:80"
+      - 80:80
   cron:
     image: piwik
     links:
       - db
-    volumes_from:
-      - app
+    volumes:
+      - piwik:/var/www/html/config
     entrypoint: |
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
@@ -51,4 +51,8 @@ services:
       done
       EOF'
     networks:
-    - back
+      - back
+
+volumes:
+  mysql: {}
+  piwik: {}
