@@ -32,8 +32,10 @@ services:
     environment:
       - VIRTUAL_HOST
     networks:
-    - back
-    - lb_web
+      - back
+      - lb_web
+    ports:
+      - "80:80"
   cron:
     image: piwik
     links:
