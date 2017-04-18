@@ -14,7 +14,7 @@ services:
     networks:
       - back
   app:
-    image: piwik
+    image: piwik:fpm
     links:
       - db
     volumes:
@@ -37,7 +37,7 @@ services:
     ports:
       - 80:80
   cron:
-    image: piwik
+    image: piwik:fpm
     links:
       - db
     volumes:
