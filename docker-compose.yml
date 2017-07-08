@@ -14,7 +14,7 @@ services:
     networks:
       - back
   app:
-    image: piwik:fpm
+    image: piwik:3.0.4-fpm
     links:
       - db
     volumes:
@@ -37,11 +37,11 @@ services:
     ports:
       - 80:80
   cron:
-    image: piwik:fpm
+    image: piwik:3.0.4-fpm
     links:
       - db
-    volumes:
-      - piwik:/var/www/html/config
+    volumes_from:
+      - app
     entrypoint: |
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
