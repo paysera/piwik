@@ -9,16 +9,18 @@ services:
     image: mysql
     volumes:
       - mysql:/var/lib/mysql
+      - ./piwik.cnf:/etc/mysql/conf.d/piwik.cnf:ro
     environment:
       - MYSQL_ROOT_PASSWORD
     networks:
       - back
   app:
-    image: piwik:3.0.4-fpm
+    image: piwik:3.2-fpm
     links:
       - db
     volumes:
       - piwik:/var/www/html/config
+      - ./php.ini:/usr/local/etc/php/php.ini:ro
     networks:
       - back
   web:
@@ -37,7 +39,7 @@ services:
     ports:
       - 80:80
   cron:
-    image: piwik:3.0.4-fpm
+    image: piwik:3.2-fpm
     links:
       - db
     volumes_from:

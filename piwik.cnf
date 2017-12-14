@@ -1,0 +1,26 @@
+[mysqld]
+table_open_cache = 3072
+table_definition_cache = 4096
+max_heap_table_size = 64M
+tmp_table_size = 64M
+max_connections = 505
+max_user_connections = 500
+max_allowed_packet = 16M
+thread_cache_size = 32
+query_cache_size = 0
+query_cache_type = 0
+default_storage_engine = InnoDB
+innodb_buffer_pool_size = 32G
+innodb_buffer_pool_instances = 32
+innodb_file_per_table = 1
+innodb_log_file_size = 4GB
+innodb_log_files_in_group = 2
+binlog_cache_size = 1M
+sync_binlog = 8
+binlog_format = row
+character_set_server = utf8
+collation_server = utf8_general_ci
+default_storage_engine = InnoDB
+innodb_autoinc_lock_mode = 2
+innodb_locks_unsafe_for_binlog = 1
+innodb_flush_log_at_trx_commit = 0
